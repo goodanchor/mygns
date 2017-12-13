@@ -32,10 +32,10 @@ FLAGS = flags.FLAGS
 
 def main():
     #pp.print(flags.FLAGS.__flags)
-    if FLAGS.input_width is None:
-        FLAGS.input_width = FLAGS.input_height
-    if FLAGS.output_width is None:
-        FLAGS.output_width = FLAGS.output_height
+    # if FLAGS.input_width is None:
+    #     FLAGS.input_width = FLAGS.input_height
+    # if FLAGS.output_width is None:
+    #     FLAGS.output_width = FLAGS.output_height
 
     if not os.path.exists(FLAGS.checkpoint_dir):
         os.makedirs(FLAGS.checkpoint_dir)
