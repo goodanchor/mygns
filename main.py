@@ -5,7 +5,7 @@ import numpy as np
 
 from Gan_model import GAN
 
-from utils import op,visualize,to_json,show_all_variables
+from utils import pp,visualize,to_json,show_all_variables
 
 import tensorflow as tf
 
@@ -42,9 +42,10 @@ def main():
     if not os.path.exists(FLAGS.sample_dir):
         os.makedirs(FLAGS.sample_dir)
 
-    run_config = tf.ConfigProto()
-    run_config.gpu_option.allow_growth = True
-
+    # run_config = tf.ConfigProto()
+    # run_config.gpu_options
+    # run_config.gpu_options.allow_growth = False
+    
     with tf.Session() as sess:
         gan = GAN(sess,
             FLAGS.input_height,
@@ -53,18 +54,18 @@ def main():
             FLAGS.batch_size,
             FLAGS.sample_num,
             FLAGS.output_height,
-            FLAgs.output_width,
+            FLAGS.output_width,
             None,
             FLAGS.z_dim,
-            FlAG.gf_dim,
+            FlAGS.gf_dim,
             FLAGS.df_dim,
             FLAGS.gfc_dim,
-            FLags.dfc_dim,
+            FLAGS.dfc_dim,
             FLAGS.c_dim,
             FLAGS.dataset_dim,
             FLAGS.input_fname_pattern,
             FLAGS.checkpoint_dir,
-            Flags.sample_dir)
+            FLAGS.sample_dir)
         show_all_variables()
 
     if FLAGS.train:
