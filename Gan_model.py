@@ -266,11 +266,11 @@ class GAN(object):
             z_con_y_1 = tf.nn.relu(self.g_bn1(self.z_con_y_1))
             self.z_con_y_2 = deconv2d(z_con_y_1,[self.batch_size,64,64,256],3,3,name = 'g_con_h2')#->[bz,64,64,256]
             z_con_y_2 = tf.nn.relu(self.g_bn2(self.z_con_y_2))
-            self.z_con_y_3 = deconv2d(z_con_y_2,[self.batch_size,128,128,128],3,3,name ='g_con_h3')
+            self.z_con_y_3 = deconv2d(z_con_y_2,[self.batch_size,128,128,128],3,3,name ='g_con_h3')#->[bz,128,128,128]
             z_con_y_3 = tf.nn.relu(self.g_bn3(self.z_con_y_3))
-            self.z_con_y_4 = deconv2d(z_con_y_3,[self.batch_size,256,256,32],4,4,name ='g_con_h4')
+            self.z_con_y_4 = deconv2d(z_con_y_3,[self.batch_size,256,256,32],4,4,name ='g_con_h4')#->[bz,256,256,32]
             z_con_y_4 = tf.nn.relu(self.g_bn4(self.z_con_y_4))
-            self.z_con_y_5 = deconv2d(z_con_y_4,[self.batch_size,512,512,3],5,5,name ='g_con_h4')
+            self.z_con_y_5 = deconv2d(z_con_y_4,[self.batch_size,512,512,3],5,5,name ='g_con_h4')#->[bz,512,512,512]
             z_con_y_5 = tf.nn.relu(self.g_bn5(self.z_con_y_5))
 
             return z_con_y_5
@@ -346,9 +346,6 @@ class GAN(object):
 
             return z_con_y_5
 
-    # def sampler(self,z,y = None):
-    #     with tf.variable('sampler') as scope:
-    #         scope.reuse_variables()
 
     def model_dir(self):
         return "{}_{}_{}_{}".format(self.dataset_name,self.batch_size,self.output_height,self.output_width)
@@ -382,4 +379,3 @@ class GAN(object):
             print ("[*] failed to load checkpoint ")
             return False,0
          
-        
