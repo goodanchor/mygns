@@ -2,7 +2,7 @@ import os
 
 import scipy.misc
 import numpy as np
-
+from six.moves import xrange
 
 #from Gan_model import GAN
 
@@ -17,8 +17,7 @@ from glob import glob
 def main():
     a = glob(r"./imout/b/*a.png")
     b = glob(r"./imout/b/*b.png")
-    for a_s in a:
-        print(a_s)
+    print(a)
     print("ok")
 # def main():
 #     print("ok")
