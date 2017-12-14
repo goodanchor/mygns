@@ -29,7 +29,7 @@ else:
 
 
 class batch_norm(object):
-    def __init__(self,epsilon,momentum = 0.9,name = 'batch_norm'):
+    def __init__(self,epsilon = 1e-5,momentum = 0.9,name = 'batch_norm'):
         with tf.variable_scope(name):
             self.epsilon = epsilon
             self.momentum = momentum
@@ -48,9 +48,12 @@ def conv2d(input_,output_dim,k_h =5,k_w = 5,d_h = 2,d_w = 2,stddev = 0.02,name =
     with tf.variable_scope(name) as scope:
         w = tf.get_variable('w',[k_h,k_w,input_.get_shape()[-1],output_dim],dtype = tf.float32,
             initializer = tf.truncated_normal_initializer(stddev = stddev))
-        conv = tf.nn.conv2d(input_,w,strides = [1,d_h,d_w,1],padding = "SAME")
-        biases = tf.get_variable('biases',[output_dim],dtype = tf.float32,initializer=tf.constant_initializer(0,0))
-        conv = tf.reshape(tf.nn.bias_add(conv,biases),conv.get_shape())
+        #conv = tf.nn.conv2d(input_,w,strides = [1,d_h,d_w,1],padding = "SAME")
+        conv = tf.nn.conv2d(input_, w, strides=[1, d_h, d_w, 1], padding='SAME')
+        #biases = tf.get_variable('biases',[output_dim],dtype = tf.float32,initializer=tf.constant_initializer(0.0))
+        biases = tf.get_variable('biases', [output_dim], initializer=tf.constant_initializer(0.0))
+        #conv = tf.reshape(tf.nn.bias_add(conv,biases),conv.get_shape())
+        conv = tf.reshape(tf.nn.bias_add(conv, biases), conv.get_shape())
         if with_w:
             return conv,w,biases
         else:
@@ -79,7 +82,7 @@ def lrelu(x,leak = 0.2,name = 'lrelu'):
 def linear(input_,output_size,scope = None,stddev = 0.02,bias_start = 0.0,with_w = False):
     shape = input_.get_shape().as_list()
     with tf.variable_scope(scope or "Linear"):
-        matrix = tf.get_variable("Matrix",[shape[1],out_put_size],tf.float32,initializer=tf.random_normal_initializer(stddev = stddev))
+        matrix = tf.get_variable("Matrix",[shape[1],output_size],tf.float32,initializer=tf.random_normal_initializer(stddev = stddev))
         bias = tf.get_variable('bias',[output_size],initializer=tf.constant_initializer(bias_start))
         if with_w:
             return tf.matmul(input_,matrix)+bias,matrix,bias
