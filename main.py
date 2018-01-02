@@ -46,7 +46,8 @@ def main(_):
     # # run_config.gpu_options
     # run_config.gpu_options.allow_growth = True
     
-    with tf.Session(config=run_config) as sess:
+    #with tf.Session(config=run_config) as sess:
+    with tf.Session() as sess:
         gan = GAN(sess,
                 input_height = FLAGS.input_height,
                 input_width = FLAGS.input_width,
